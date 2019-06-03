@@ -1,0 +1,7 @@
+spring:
+  jpa:
+    generate-ddl: true
+    
+  h2:
+    console:
+      enabled: true

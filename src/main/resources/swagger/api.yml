@@ -1,0 +1,390 @@
+swagger: '2.0'
+info:
+  title: Service Delivery Platform - Netflix Live
+  description: >-
+    This is Swagger UI environment generated for the TIM Service Delivery
+    Platform for Netflix Live
+  version: '1.0'
+host: serverRoot
+basePath: /sdp-netflix-live/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /transaction/amount:
+    post:
+      operationId: Charges a customer
+      summary: Charges a customer
+      tags:
+        - Charging
+      parameters:
+        - name: Authorization
+          in: header
+          description: Basic Authentication
+          required: true
+          type: string
+        - name: X-Param-values
+          in: header
+          description: ''
+          type: string
+        - schema:
+            $ref: '#/definitions/Transaction'
+          required: true
+          in: body
+          name: amountTransaction
+          description: Object to charge user
+      responses:
+        '200':
+          description: Sent
+          headers:
+            X-Plugin-Param-Keys:
+              type: string
+              description: X-Plugin-Param-Keys
+            X-Plugin-Param-Values:
+              type: string
+              description: X-Plugin-Param-Values
+        '201':
+          description: Sent
+          headers:
+            X-Plugin-Param-Keys:
+              type: string
+              description: X-Plugin-Param-Keys
+            X-Plugin-Param-Values:
+              type: string
+              description: X-Plugin-Param-Values
+        '400':
+          description: |-
+            Bad Request
+            List of supported error codes:
+              - POL1002: Subscription not exist
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '405':
+          description: Method Not allowed
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
+  /liveSubscription:
+    delete:
+      operationId: Subscription Actions
+      summary: Cancel a Subscription
+      tags:
+        - Subscription
+      parameters:
+        - name: Authorization
+          in: header
+          description: Basic Authentication
+          required: true
+          type: string
+        - name: X-Param-values
+          in: header
+          description: ''
+          type: string
+        - schema:
+            $ref: '#/definitions/WebCancellation'
+          required: true
+          in: body
+          name: WebCancellation
+          description: Object to charge user
+      responses:
+        '200':
+          description: Sent
+          headers:
+            X-Plugin-Param-Keys:
+              type: string
+              description: X-Plugin-Param-Keys
+            X-Plugin-Param-Values:
+              type: string
+              description: X-Plugin-Param-Values
+        '201':
+          description: Sent
+          headers:
+            X-Plugin-Param-Keys:
+              type: string
+              description: X-Plugin-Param-Keys
+            X-Plugin-Param-Values:
+              type: string
+              description: X-Plugin-Param-Values
+        '400':
+          description: |-
+            Bad Request
+            List of supported error codes:
+              - POL1002: Subscription not exist
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '405':
+          description: Method Not allowed
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'            
+    post:
+      summary: Active a Subscription
+      tags:
+        - Subscription
+      parameters:
+        - name: Authorization
+          in: header
+          description: Basic Authentication
+          required: true
+          type: string
+        - name: X-Param-values
+          in: header
+          description: ''
+          type: string
+        - schema:
+            $ref: '#/definitions/WebActivation'
+          required: true
+          in: body
+          name: WebActivation
+          description: Object to active a subscription
+      responses:
+        '200':
+          description: Sent
+          headers:
+            X-Plugin-Param-Keys:
+              type: string
+              description: X-Plugin-Param-Keys
+            X-Plugin-Param-Values:
+              type: string
+              description: X-Plugin-Param-Values
+        '201':
+          description: Sent
+          headers:
+            X-Plugin-Param-Keys:
+              type: string
+              description: X-Plugin-Param-Keys
+            X-Plugin-Param-Values:
+              type: string
+              description: X-Plugin-Param-Values
+        '400':
+          description: |-
+            Bad Request
+            List of supported error codes:
+              - POL1002: Subscription not exist
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '405':
+          description: Method Not allowed
+          schema:
+            $ref: '#/definitions/Error'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'            
+            
+definitions:
+  WebActivation:
+    type: object
+    description: Web Activation Object
+    properties:
+      applicationId:
+        type: string
+        description: Application ID
+      cpf:
+        type: string
+        description: CPF
+      coId:
+        type: string
+        description: coId
+      customerId:
+        type: string
+        description: Customer ID
+    example:
+      applicationId: 11241
+      cpf: 123456789
+      coId: 12474
+      customerId: 58779646522
+      subscriptionId: 132215525552
+  WebCancellation:
+    type: object
+    description: Web Cancellation Object
+    properties:
+      applicationId:
+        type: string
+        description: Application ID
+      cpf:
+        type: string
+        description: CPF
+      coId:
+        type: string
+        description: coId
+      customerId:
+        type: string
+        description: Customer ID
+      subscriptionId:
+        type: string
+        description: Subscription Id
+    example:
+      applicationId: 11241
+      cpf: 123456789
+      coId: 12474
+      customerId: 58779646522
+      subscriptionId: 132215525552
+  ChargingMetaData:
+    type: object
+    description: >-
+      Charging Metadata
+    properties:
+      taxAmount:
+        type: string
+        description: >-
+          Tax amount
+      mandateId:
+        type: string
+        description: >-
+          Mandate Id
+      serviceId:
+        type: string
+        description: >-
+          Service Id
+      productId:
+        type: string
+        description: >-
+          Product Id
+    example:
+      taxAmount: 0
+      mandateId: 1
+      serviceId: 527
+      productId: 0000000900001
+  ChargingInformation:
+    type: object
+    description: >-
+      Charging information
+    properties:
+      description:
+        type: string
+        description: >-
+          Description
+      amount:
+        type: string
+        description: >-
+          Amount
+      code:
+        type: string
+        description: >-
+          Code
+    example:
+      description: chargeAmount
+      amount: 28.5
+      code: 11205
+  PaymentAmount:
+    type: object
+    description: >-
+      Payment object with payment information
+    properties:
+      chargingInformation:
+        $ref: '#/definitions/ChargingInformation'
+      chargingMetaData:
+        $ref: '#/definitions/ChargingMetaData'
+  AmountTransaction:
+    type: object
+    description: >-
+      Amount transaction object who is responsable to charge customer subscription
+    properties:
+      endUserId:
+        type: string
+        description: UserId who will be charge
+      subscriptionId:
+        type: string
+        description: >-
+          Subscription Id
+      transactionOperationStatus:
+        type: string
+        description: Transaction Operation Status
+      referenceCode:
+        type: string
+        description: Reference Code
+      paymentAmount:
+         $ref: '#/definitions/PaymentAmount'
+    example:
+      endUserId: 31930254312
+      subscriptionId: 1234562138
+      transactionOperationStatus: Charged
+      referenceCode: Live
+      paymentAmount:
+        chargingInformation:
+          description: chargeAmount
+          amount: 28.5
+          code: 11205
+        chargingMetaData:
+          taxAmount: 0
+          mandateId: 1
+          serviceId: 527
+          productId: 0000000900001
+  Transaction:
+    type: object
+    properties:
+      amountTransaction:
+         $ref: '#/definitions/AmountTransaction'
+  RequestError:
+    properties:
+      messageId:
+        type: string
+        description: Error code
+      text:
+        type: string
+        description: >-
+          (optional) Text that provide more details and corrective actions
+          related to the error.
+    example:
+      messageId: POL1002
+      text: Subscription not exist
+  Error:
+    $ref: '#/definitions/RequestError'
