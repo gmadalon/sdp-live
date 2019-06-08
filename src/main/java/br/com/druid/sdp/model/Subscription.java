@@ -1,6 +1,7 @@
 package br.com.druid.sdp.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,8 +43,15 @@ public class Subscription {
 	@Column(name = "subscriptionDate", columnDefinition = "TIMESTAMP")
 	private LocalDateTime subscriptionDate;
 	
-	@Column(name = "externalSubscriptionId")
-	private String externalSubscriptionId;
+	@Column(name = "subscriptionId")
+	private String subscriptionId;
 
+	@Column(name = "transactionId")
+	private String transactionId;
+
+	public String createSubscriptionId() {
+		subscriptionId = UUID.randomUUID().toString();
+		return subscriptionId;
+	}
 	
 }

@@ -20,6 +20,8 @@ public class DatabaseInitializer implements CommandLineRunner{
 
 		ServiceProvider serviceProvider = new ServiceProvider();
 		serviceProvider.setName("Test Service Provider");
+		serviceProvider.setSubscriptionNotificationUrl("http://localhost:8090");
+
 
 		serviceProviderRepository.save(serviceProvider);
 		

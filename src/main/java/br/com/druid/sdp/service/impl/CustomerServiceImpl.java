@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import br.com.druid.sdp.exception.CustomerNotFoundException;
-import br.com.druid.sdp.exception.InvalidExternalCoidException;
-import br.com.druid.sdp.exception.InvalidExternalCustomerId;
 import br.com.druid.sdp.model.Customer;
+import br.com.druid.sdp.model.ErrorCode;
+import br.com.druid.sdp.model.exception.BusinessException;
 import br.com.druid.sdp.repository.CustomerRepository;
 import br.com.druid.sdp.service.CustomerService;
 
@@ -26,34 +25,34 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer getCustomer(String cpf, String externalCoId, String externalCustomerId) {
 		Customer customer = null;
-		Optional<Customer> optionalCustomer = customerRepository.findByCpf(Long.valueOf(cpf));
+		Optional<Customer> optionalCustomer = customerRepository.findByCpf(cpf);
 		if (!optionalCustomer.isPresent()) {
-			throw new CustomerNotFoundException();
+			throw new BusinessException(ErrorCode.CustomerNotFound);
 		} else {
 			customer = optionalCustomer.get();
 			if (!ObjectUtils.nullSafeEquals(customer.getExternalCoId(), externalCoId)) {
-				throw new InvalidExternalCoidException();
+				throw new BusinessException(ErrorCode.InvalidExternalCoid);
 			} else if (!ObjectUtils.nullSafeEquals(customer.getExternalCustomerId(), externalCustomerId)) {
-				throw new InvalidExternalCustomerId();
+				throw new BusinessException(ErrorCode.InvalidExternalCustomerId);
 			}
 		}
 		return customer;
 	}
 
 	@Override
-	public Customer createCustomer(String cpf, String externalCoId, String externalCustomerId) {
+	public Customer createCustomer(String cpf, String externalCoId, String externalCustomerId, String transactionId) {
 		Customer customer = null;
-		Optional<Customer> optionalCustomer = customerRepository.findByCpf(Long.valueOf(cpf));
+		Optional<Customer> optionalCustomer = customerRepository.findByCpf(cpf);
 		if (!optionalCustomer.isPresent()) {
-			customer = Customer.builder().cpf(Long.valueOf(cpf)).externalCoId(externalCoId)
+			customer = Customer.builder().cpf(cpf).externalCoId(externalCoId)
 					.externalCustomerId(externalCustomerId).build();
 			customer = customerRepository.save(customer);
 		} else {
 			customer = optionalCustomer.get();
 			if (!ObjectUtils.nullSafeEquals(customer.getExternalCoId(), externalCoId)) {
-				throw new InvalidExternalCoidException();
+				throw new BusinessException(ErrorCode.InvalidExternalCoid);
 			} else if (!ObjectUtils.nullSafeEquals(customer.getExternalCustomerId(), externalCustomerId)) {
-				throw new InvalidExternalCustomerId();
+				throw new BusinessException(ErrorCode.InvalidExternalCustomerId);
 			}
 		}
 		return customer;

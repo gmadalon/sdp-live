@@ -15,12 +15,12 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 	RestTemplate restTemplate;
 	
 	@Autowired
-	public ServiceProviderServiceImpl(RestTemplate restTemplate) {
-		this.restTemplate = restTemplate;
+	public ServiceProviderServiceImpl(RestTemplate restTemplateServiceProvider) {
+		this.restTemplate = restTemplateServiceProvider;
 	}
 	
 	@Override
-	public void notify(Subscription subscription){
+	public void notify(Subscription subscription, String transactionId ){
 		ServiceProviderNotification notification = ServiceProviderNotificationMapper.MAPPER.toServiceProviderNotification(subscription);
 		restTemplate.postForLocation(subscription.getApplication().getServiceProvider().getSubscriptionNotificationUrl(),notification);
 	}

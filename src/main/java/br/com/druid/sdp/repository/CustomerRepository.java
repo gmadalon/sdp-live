@@ -10,7 +10,7 @@ import br.com.druid.sdp.model.Customer;
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-	Optional<Customer> findByCpf(Long cpf);
+	Optional<Customer> findByCpf(String cpf);
 	
 	
 }

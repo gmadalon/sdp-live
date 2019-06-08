@@ -4,6 +4,6 @@ import br.com.druid.sdp.model.Subscription;
 
 public interface ServiceProviderService {
 
-	void notify(Subscription subscription);
+	void notify(Subscription subscription, String transactionId);
 
 }

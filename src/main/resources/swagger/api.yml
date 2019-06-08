@@ -118,15 +118,8 @@ paths:
             X-Plugin-Param-Values:
               type: string
               description: X-Plugin-Param-Values
-        '201':
-          description: Sent
-          headers:
-            X-Plugin-Param-Keys:
-              type: string
-              description: X-Plugin-Param-Keys
-            X-Plugin-Param-Values:
-              type: string
-              description: X-Plugin-Param-Values
+          schema:
+            $ref: '#/definitions/CancellationResponse'
         '400':
           description: |-
             Bad Request
@@ -179,17 +172,10 @@ paths:
           name: WebActivation
           description: Object to active a subscription
       responses:
-        '200':
-          description: Sent
-          headers:
-            X-Plugin-Param-Keys:
-              type: string
-              description: X-Plugin-Param-Keys
-            X-Plugin-Param-Values:
-              type: string
-              description: X-Plugin-Param-Values
         '201':
           description: Sent
+          schema:
+            $ref: '#/definitions/SubscriptionResponse'
           headers:
             X-Plugin-Param-Keys:
               type: string
@@ -373,6 +359,26 @@ definitions:
     properties:
       amountTransaction:
          $ref: '#/definitions/AmountTransaction'
+  CancellationResponse:
+    type: object
+    properties:
+      transactionId:
+        type: string
+        description: Transaction Id
+    example:
+      transactionId: 12313-2342rr324-4324234
+  SubscriptionResponse:
+    type: object
+    properties:
+      transactionId:
+        type: string
+        description: Transaction Id
+      subscriptionId:
+        type: string
+        description: Subscritpion Id
+    example:
+      transactionId: 12313-2342rr324-4324234
+      subscriptionId: 12313-2342rr324-4324234
   RequestError:
     properties:
       messageId:

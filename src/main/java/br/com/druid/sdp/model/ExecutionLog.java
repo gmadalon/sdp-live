@@ -4,42 +4,55 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExecutionLog {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXECUTION_LOG")
 	@SequenceGenerator(sequenceName = "execution_log_sq", allocationSize = 1, name = "EXECUTION_LOG")
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
+
+	@Column(name = "externalApplicationId", length = 50)
+	private String externalApplicationId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "applicationId")
-    private Application application;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customerId")
-    private Customer customer;
-	
+	@Column(name = "cpf")
+	private String cpf;
+
+	@Column(name = "externalCoId", length = 50)
+	private String externalCoId;
+
+	@Column(name = "externalCustomerId", length = 50)
+	private String externalCustomerId;
+
+	@Column(name = "subscriptionId", length = 50)
+	private String subscriptionId;
+
+	@Column(name = "transactionId", length = 50)
+	private String transactionId;
+
 	@Column(name = "logDate", nullable = false, columnDefinition = "TIMESTAMP")
 	private LocalDateTime logDate;
 
 	@Column(name = "message", length = 1000)
 	private String message;
-	
+
 	@Column(name = "exceptionMessage", length = 4000)
 	private String exceptionMessage;
 
@@ -48,8 +61,9 @@ public class ExecutionLog {
 
 	@Column(name = "errorCode")
 	private ErrorCode errorCode;
-	
+
 	@Column(name = "event", nullable = false)
 	private ExecutionLogEvent event;
+
 
 }

@@ -18,7 +18,7 @@ public interface ServiceProviderNotificationMapper {
 		@Mapping(target = "cpf", source = "customer.cpf" ),
 		@Mapping(target = "coId", source = "customer.externalCoId" ),
 		@Mapping(target = "customerId", source = "customer.externalCustomerId" ),
-		@Mapping(target = "subscriptionId", source = "externalSubscriptionId" )		
+		@Mapping(target = "subscriptionId", source = "subscriptionId" )		
 	})
 	ServiceProviderNotification toServiceProviderNotification(Subscription subscription);
 

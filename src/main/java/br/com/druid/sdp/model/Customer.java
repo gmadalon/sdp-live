@@ -21,16 +21,15 @@ public class Customer {
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	
-	@Column(name = "cpf", unique = true, nullable = false)
+	@Column(name = "cpf", unique = true, nullable = false, length = 11)
 	/* a number of a document from brazil is equivalent of tax id */
-	private Long cpf;
+	private String cpf;
 	
 	@Column(name = "externalCustomerId",unique = true, nullable = false)
 	private String externalCustomerId;
 	
 	@Column(name = "externalCoId",unique = true, nullable = false)
 	private String externalCoId;
-	
 	
 
 }
