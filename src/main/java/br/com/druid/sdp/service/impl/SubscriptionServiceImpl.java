@@ -109,7 +109,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		Application application = applicationService.getAplication(externalApplicationId);
 		
 		Subscription subscription = getSubscription(application, customer);
-		
+		if(subscription == null) {
+			throw new BusinessException(ErrorCode.SubscriptionNotFount);
+		}
 		subscriptionRepository.delete(subscription);
 
 		protocolService.createForCancellation(subscription, transactionId);

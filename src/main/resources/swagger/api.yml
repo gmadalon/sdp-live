@@ -39,15 +39,8 @@ paths:
       responses:
         '200':
           description: Sent
-          headers:
-            X-Plugin-Param-Keys:
-              type: string
-              description: X-Plugin-Param-Keys
-            X-Plugin-Param-Values:
-              type: string
-              description: X-Plugin-Param-Values
-        '201':
-          description: Sent
+          schema:
+            $ref: '#/definitions/Transaction'
           headers:
             X-Plugin-Param-Keys:
               type: string
@@ -295,9 +288,10 @@ definitions:
       Charging information
     properties:
       description:
-        type: string
-        description: >-
-          Description
+        type: array
+        items:
+          type: string
+          description: Description
       amount:
         type: string
         description: >-
@@ -307,7 +301,7 @@ definitions:
         description: >-
           Code
     example:
-      description: chargeAmount
+      description:  [chargeAmount, exampleDescription ]
       amount: 28.5
       code: 11205
   PaymentAmount:

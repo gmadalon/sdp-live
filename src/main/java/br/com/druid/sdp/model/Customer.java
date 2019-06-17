@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.util.StringUtils;
+
+import br.com.druid.sdp.model.exception.BusinessException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -32,4 +35,10 @@ public class Customer {
 	private String externalCoId;
 	
 
+	public void check() {
+		if(!StringUtils.hasText(cpf) || !StringUtils.hasText(externalCustomerId) || !StringUtils.hasText(externalCoId)) {
+			throw new BusinessException(ErrorCode.InvalidCustomerFields);
+		}
+	}
+	
 }

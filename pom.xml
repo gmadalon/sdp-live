@@ -23,6 +23,9 @@
 		<springfox.version>2.9.2</springfox.version>
 		<org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
 		<org.projectlombok.version>1.18.8</org.projectlombok.version>
+		<ojdbc6.version>11.1.0.7.0</ojdbc6.version>
+		<mockserver.version>5.5.4</mockserver.version>
+		<gtklib.version>1.0.16</gtklib.version>
 	</properties>
 
 	<dependencies>
@@ -78,12 +81,36 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>${ojdbc6.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+        </dependency>
+
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${org.projectlombok.version}</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+
+		<dependency>
+			<artifactId>gtk-domain</artifactId>
+			<groupId>br.com.druid.gtk</groupId>
+			<version>${gtklib.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>br.com.druid.gtk</groupId>
+			<artifactId>gtk-service</artifactId>
+			<version>${gtklib.version}</version>
+			<type>jar</type>
 		</dependency>
 
 		<dependency>
@@ -94,13 +121,13 @@
 		<dependency>
 			<groupId>org.mock-server</groupId>
 			<artifactId>mockserver-netty</artifactId>
-			<version>5.5.4</version>
+			<version>${mockserver.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mock-server</groupId>
 			<artifactId>mockserver-client-java</artifactId>
-			<version>5.5.4</version>
+			<version>${mockserver.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -162,6 +189,32 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 			</plugin>
+			<!-- tag::wsdl[] -->
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.14.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaIncludes>
+						<include>*.wsdl</include>
+					</schemaIncludes>
+					<schemaExcludes>
+						<schemaExclude>*.xsd</schemaExclude>
+					</schemaExcludes>
+					<schemaDirectory>src/main/resources/wsdl</schemaDirectory>
+					<schemaLanguage>WSDL</schemaLanguage>
+					<generatePackage>br.com.druid.sdp.wsdl</generatePackage>
+					<wsdl>true</wsdl>
+				</configuration>
+			</plugin>
+			<!-- end::wsdl[] -->
 		</plugins>
 		<pluginManagement>
 			<plugins>

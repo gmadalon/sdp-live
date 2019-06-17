@@ -1,0 +1,70 @@
+<!-- edited with XMLSpy v2007 sp2 (http://www.altova.com) by Tim Celular S.A (Tim Celular S.A) -->
+<!--edited with XMLSpy v2007 sp2 (http://www.altova.com) by Tim Celular S.A (Tim Celular S.A) -->
+<!--Revisado por Vinicius Maciel em 15/02/2016 -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://schemas.timbrasil.com.br/mw/services/esb/CUT_Send_Mail" xmlns:head="http://schemas.timbrasil.com.br/mw/envelope/Header" xmlns:ns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://schemas.xmlsoap.org/soap/encoding/" name="CUT_Send_Mail" targetNamespace="http://schemas.timbrasil.com.br/mw/services/esb/CUT_Send_Mail">
+	<types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schemas.timbrasil.com.br/mw/services/esb/CUT_Send_Mail" elementFormDefault="qualified">
+			<import namespace="http://schemas.timbrasil.com.br/mw/envelope/Header" schemaLocation="./Header_nmws.xsd"/>
+			<complexType name="Request">
+				<sequence>
+					<element name="customer" minOccurs="0">
+						<complexType>
+							<sequence>
+								<element name="device" minOccurs="0">
+									<complexType>
+										<sequence>
+											<element name="msisdn" type="string" minOccurs="0"/>
+										</sequence>
+									</complexType>
+								</element>
+								<element name="plan-type" type="string" minOccurs="0"/>
+								<element name="email" type="string" minOccurs="0"/>
+							</sequence>
+						</complexType>
+					</element>
+					<element name="template" minOccurs="0">
+						<complexType>
+							<sequence>
+								<element name="code" type="string" minOccurs="0"/>
+							</sequence>
+						</complexType>
+					</element>
+					<element name="activity" minOccurs="0">
+						<complexType>
+							<sequence>
+								<element name="id" type="string" minOccurs="0"/>
+							</sequence>
+						</complexType>
+					</element>
+					<element name="interaction" minOccurs="0">
+						<complexType>
+							<sequence>
+								<element name="protocol" type="string" minOccurs="0"/>
+							</sequence>
+						</complexType>
+					</element>
+					<element name="responsible-payment" type="string" minOccurs="0"/>
+				</sequence>
+			</complexType>
+			<complexType name="Response">
+				<sequence/>
+			</complexType>
+			<element name="request" type="tns:Request"/>
+			<element name="response" type="tns:Response" nillable="true"/>
+		</schema>
+	</types>
+	<message name="RequestMessage">
+		<part name="request_header" element="head:header"/>
+		<part name="request_body" element="tns:request"/>
+	</message>
+	<message name="ResponseMessage">
+		<part name="response_header" element="head:header"/>
+		<part name="response_body" element="tns:response"/>
+	</message>
+	<portType name="PortType">
+		<operation name="execute">
+			<input name="ExecuteRequest" message="tns:RequestMessage"/>
+			<output name="ExecuteResponse" message="tns:ResponseMessage"/>
+		</operation>
+	</portType>
+</definitions>

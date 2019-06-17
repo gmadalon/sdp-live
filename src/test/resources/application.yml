@@ -1,0 +1,5 @@
+gatekeeper:
+  baseUrl: http://localhost:9999
+  username: testeUsername
+  password: testePassword
+  expiration: 10

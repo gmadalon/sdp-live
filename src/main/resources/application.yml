@@ -1,7 +1,40 @@
 spring:
   jpa:
     generate-ddl: true
-    
   h2:
     console:
       enabled: true
+gatekeeper:
+  baseUrl: http://localhost:9999
+  username: testeUsername
+  password: testePassword
+  expiration: 10
+
+---
+spring:
+  profiles: devTim
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+      dialect: org.hibernate.dialect.Oracle10gDialect
+    properties.javax.persistence.schema-generation.create-source: metadata
+    properties.javax.persistence.schema-generation.scripts.action: create
+    properties.javax.persistence.schema-generation.scripts.create-target: create.sql      
+  datasource:
+    platform: oracle   
+    initialization-mode: always
+    url: jdbc:oracle:thin:@localhost:1522:orcl
+    username: HIBERNATE_TEST
+    password: HIBERNATE_TEST
+    driver.class: oracle.jdbc.driver.OracleDriver    
+  h2:
+    console:
+      enabled: true
+gatekeeper:
+  baseUrl: http://localhost:9999
+  username: testeUsername
+  password: testePassword
+  expiration: 10
+ 

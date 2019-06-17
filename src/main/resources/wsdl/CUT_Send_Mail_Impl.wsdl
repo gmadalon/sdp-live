@@ -1,0 +1,28 @@
+<!--Revisado por Vinicius Maciel em 15/02/2016 -->
+<definitions
+    name = "CUT_Send_Mail"
+    targetNamespace = "http://schemas.timbrasil.com.br/mw/services/esb/CUT_Send_Mail"
+    xmlns = "http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns = "http://schemas.timbrasil.com.br/mw/services/esb/CUT_Send_Mail"
+    xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/">
+    <import location = "CUT_Send_Mail.wsdl" namespace = "http://schemas.timbrasil.com.br/mw/services/esb/CUT_Send_Mail"/>
+    <binding name = "Soap11Binding" type = "tns:PortType">
+        <soap:binding style = "document" transport = "http://schemas.xmlsoap.org/soap/http"/>
+        <operation name = "execute">
+            <soap:operation soapAction = "http://www.timbrasil.com.br/execute" style = "document"/>
+            <input>
+                <soap:header message = "tns:RequestMessage" part = "request_header" use = "literal"/>
+                <soap:body parts = "request_body" use = "literal"/>
+            </input>
+            <output>
+                <soap:header message = "tns:ResponseMessage" part = "response_header" use = "literal"/>
+                <soap:body parts = "response_body" use = "literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name = "CUT_Send_Mail">
+        <port binding = "tns:Soap11Binding" name = "Soap11Port">
+            <soap:address location = "http://server:port/mw/services/esb/CUT_Send_Mail"/>
+        </port>
+    </service>
+</definitions>
