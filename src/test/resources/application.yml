@@ -1,5 +1,13 @@
+spring:
+  datasource:
+    platform: oracle   
+    url: jdbc:oracle:thin:@10.174.225.126:1521:IAMD1
+    username: SOCSG001
+    password: ocs#2015dev
+    driver.class: oracle.jdbc.driver.OracleDriver    
 gatekeeper:
   baseUrl: http://localhost:9999
   username: testeUsername
   password: testePassword
   expiration: 10
+  

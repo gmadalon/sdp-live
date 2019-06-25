@@ -189,32 +189,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 			</plugin>
-			<!-- tag::wsdl[] -->
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.14.0</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<schemaIncludes>
-						<include>*.wsdl</include>
-					</schemaIncludes>
-					<schemaExcludes>
-						<schemaExclude>*.xsd</schemaExclude>
-					</schemaExcludes>
-					<schemaDirectory>src/main/resources/wsdl</schemaDirectory>
-					<schemaLanguage>WSDL</schemaLanguage>
-					<generatePackage>br.com.druid.sdp.wsdl</generatePackage>
-					<wsdl>true</wsdl>
-				</configuration>
-			</plugin>
-			<!-- end::wsdl[] -->
 		</plugins>
 		<pluginManagement>
 			<plugins>

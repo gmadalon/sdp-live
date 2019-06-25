@@ -94,9 +94,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		Subscription subscription = createSubscription(application, customer, transactionId);
 		
 		serviceProviderService.notify(subscription, transactionId );
-		
-		protocolService.createForSubscription(subscription, transactionId);
-		
+			
 		return subscription;
 	}
 
@@ -114,8 +112,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 		}
 		subscriptionRepository.delete(subscription);
 
-		protocolService.createForCancellation(subscription, transactionId);
-	
+		serviceProviderService.notify(subscription, transactionId );
+
 	}
 
 }

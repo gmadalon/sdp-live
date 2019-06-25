@@ -59,6 +59,21 @@ public class ExecutionLogAspect {
 		}
 
 	}
+	
+	@AfterReturning(pointcut = "execution(* br.com.druid.sdp.service.impl.SubscriptionServiceImpl.delete(..))", returning = "returnObject")
+	public void subscriptionDeletionOK(JoinPoint joinPoint, Object returnObject) {
+
+		if (returnObject != null && returnObject instanceof Subscription) {
+			Subscription subscription = (Subscription) returnObject;
+			ExecutionLog executionLog = ExecutionLog.builder().subscriptionId(subscription.getSubscriptionId()).externalApplicationId(subscription.getApplication().getExternalApplicationId())
+					.externalCoId(subscription.getCustomer().getExternalCoId()).externalCustomerId(subscription.getCustomer().getExternalCustomerId()).subscriptionId(subscription.getSubscriptionId())
+					.cpf(subscription.getCustomer().getCpf()).transactionId(subscription.getTransactionId())
+					.event(ExecutionLogEvent.SUBSCRIPTION_DELETION).isOk(true).logDate(LocalDateTime.now()).build();
+			executionLogService.save(executionLog);
+		}
+
+	}
+
 	@AfterReturning(pointcut = "execution(* br.com.druid.sdp.service.impl.ProtocolServiceImpl.createForSubscription(..))")
 	public void createForSubscriptionOK(JoinPoint joinPoint) {
 
@@ -152,11 +167,25 @@ public class ExecutionLogAspect {
 			ExecutionLog executionLog = ExecutionLog.builder().externalApplicationId((String)joinPoint.getArgs()[0])
 					.externalCoId((String)joinPoint.getArgs()[2]).externalCustomerId((String)joinPoint.getArgs()[3])
 					.cpf((String)joinPoint.getArgs()[1]).transactionId((String)joinPoint.getArgs()[4])
-					.event(ExecutionLogEvent.SERVICE_PROVIDER_NOTIFICATION).isOk(false).logDate(LocalDateTime.now()).errorCode(getErrorCodeFromThrowable(throwable)).exceptionMessage(throwable.getMessage()).build();
+					.event(ExecutionLogEvent.SUBSCRIPTION_CREATION).isOk(false).logDate(LocalDateTime.now()).errorCode(getErrorCodeFromThrowable(throwable)).exceptionMessage(throwable.getMessage()).build();
 			executionLogService.save(executionLog);
 		}
 
 	}
+	
+	@AfterThrowing(pointcut = "execution(* br.com.druid.sdp.service.impl.SubscriptionServiceImpl.delete(..))",throwing = "throwable")
+	public void subscriptionDeletionException(JoinPoint joinPoint, Throwable throwable) {
+		if (joinPoint.getArgs() != null && joinPoint.getArgs().length >= 5 ) {
+			
+			ExecutionLog executionLog = ExecutionLog.builder().externalApplicationId((String)joinPoint.getArgs()[0])
+					.externalCoId((String)joinPoint.getArgs()[2]).externalCustomerId((String)joinPoint.getArgs()[3])
+					.cpf((String)joinPoint.getArgs()[1]).transactionId((String)joinPoint.getArgs()[4])
+					.event(ExecutionLogEvent.SUBSCRIPTION_DELETION).isOk(false).logDate(LocalDateTime.now()).errorCode(getErrorCodeFromThrowable(throwable)).exceptionMessage(throwable.getMessage()).build();
+			executionLogService.save(executionLog);
+		}
+
+	}
+
 	
 	@AfterThrowing(pointcut = "execution(* br.com.druid.sdp.service.impl.CustomerServiceImpl.createCustomer(..))",throwing = "throwable")
 	public void customerCreationException(JoinPoint joinPoint, Throwable throwable) {

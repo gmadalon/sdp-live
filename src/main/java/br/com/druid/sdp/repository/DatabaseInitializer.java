@@ -17,7 +17,10 @@ public class DatabaseInitializer implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-
+		applicationRepository.deleteAll();
+		serviceProviderRepository.deleteAll();
+		
+		
 		ServiceProvider serviceProvider = new ServiceProvider();
 		serviceProvider.setName("Test Service Provider");
 		serviceProvider.setSubscriptionNotificationUrl("http://localhost:8090");
